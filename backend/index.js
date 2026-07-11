@@ -26,6 +26,18 @@ app.use(cors({
 }));
 app.use(bodyParser.json());
 
+app.get('/', (req, res) => {
+  res.json({
+    status: 'ok',
+    message: 'Zerodha Clone backend is running',
+    endpoints: ['/health', '/allHoldings', '/allPositions', '/newOrder']
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 // app.get('/addHoldings',async(req,res)=>{
 //      let tempHoldings=[
 //   {
