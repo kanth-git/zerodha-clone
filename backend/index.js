@@ -18,11 +18,12 @@ const {OrdersModel} = require("./model/OrdersModel");
 const PORT=process.env.PORT || 3002;
 const uri= process.env.MONGO_URL;
 
-
-
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || '*',
+  credentials: true,
+}));
 app.use(bodyParser.json());
 
 // app.get('/addHoldings',async(req,res)=>{
@@ -216,7 +217,12 @@ app.post('/newOrder',async(req,res)=>{
 
  
 app.listen(PORT, ()=>{
-  console.log("App started!");
-   mongoose.connect(uri);
-   console.log("DB connected!");
-}); 
+  console.log("App started on port " + PORT);
+   if (uri) {
+     mongoose.connect(uri)
+       .then(() => console.log("DB connected!"))
+       .catch((err) => console.error("DB connection error:", err));
+   } else {
+     console.log("No MONGO_URL provided, skipping DB connection.");
+   }
+});
