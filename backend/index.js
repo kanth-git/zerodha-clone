@@ -27,11 +27,30 @@ app.use(cors({
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.json({
-    status: 'ok',
-    message: 'Zerodha Clone backend is running',
-    endpoints: ['/health', '/allHoldings', '/allPositions', '/newOrder']
-  });
+  res.type('html').send(`<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zerodha Clone API</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+      code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>Zerodha Clone Backend</h1>
+    <p>The API is running successfully.</p>
+    <p>Use these endpoints:</p>
+    <ul>
+      <li><code>/health</code></li>
+      <li><code>/allHoldings</code></li>
+      <li><code>/allPositions</code></li>
+      <li><code>/newOrder</code></li>
+    </ul>
+    <p>For the full UI, deploy the frontend/static site separately and point it to this backend URL.</p>
+  </body>
+  </html>`);
 });
 
 app.get('/health', (req, res) => {
